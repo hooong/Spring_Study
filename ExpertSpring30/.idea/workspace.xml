@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="04b17b5a-43d8-4800-b3b9-da36ac490355" name="Default Changelist" comment="" />
+    <list default="true" id="04b17b5a-43d8-4800-b3b9-da36ac490355" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/expert001_03/CarTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +19,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -23,6 +30,7 @@
     </option>
   </component>
   <component name="ProjectId" id="1UuwGClYvqiqIMdqGJCbdGO3eT1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -30,23 +38,53 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/expert002" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/expert002" />
+      <recent name="$PROJECT_DIR$/src/main/java/expert001_03" />
+      <recent name="$PROJECT_DIR$/src/main/java/expert001_02" />
+    </key>
+  </component>
   <component name="RunManager" selected="JUnit.CarTest">
     <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="expert001_01.Driver" />
+      <option name="MAIN_CLASS_NAME" value="expert001_03.Driver" />
       <module name="ExpertSpring30" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="expert001_01.*" />
+          <option name="PATTERN" value="expert001_03.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CarTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ExpertSpring30" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="expert001_02.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="expert001_02" />
+      <option name="MAIN_CLASS_NAME" value="expert001_02.CarTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -55,28 +93,44 @@
       <module name="ExpertSpring30" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="expert001_01.*" />
+          <option name="PATTERN" value="expert001_03.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="expert001_01" />
-      <option name="MAIN_CLASS_NAME" value="expert001_01.CarTest" />
+      <option name="PACKAGE_NAME" value="expert001_03" />
+      <option name="MAIN_CLASS_NAME" value="expert001_03.CarTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CarTest.자동차_장착_타이어브랜드_테스트" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CarTest.자동차_미국타이어_장착_타이어브랜드_테스트 (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ExpertSpring30" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="expert001_01.*" />
+          <option name="PATTERN" value="expert001_03.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="expert001_01" />
-      <option name="MAIN_CLASS_NAME" value="expert001_01.CarTest" />
-      <option name="METHOD_NAME" value="자동차_장착_타이어브랜드_테스트" />
+      <option name="PACKAGE_NAME" value="expert001_03" />
+      <option name="MAIN_CLASS_NAME" value="expert001_03.CarTest" />
+      <option name="METHOD_NAME" value="자동차_미국타이어_장착_타이어브랜드_테스트" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CarTest.자동차_미국타이어_장착_타이어브랜드_테스트" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ExpertSpring30" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="expert001_02.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="expert001_02" />
+      <option name="MAIN_CLASS_NAME" value="expert001_02.CarTest" />
+      <option name="METHOD_NAME" value="자동차_미국타이어_장착_타이어브랜드_테스트" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -85,8 +139,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.CarTest" />
-        <item itemvalue="JUnit.CarTest.자동차_장착_타이어브랜드_테스트" />
+        <item itemvalue="JUnit.CarTest.자동차_미국타이어_장착_타이어브랜드_테스트 (1)" />
         <item itemvalue="Application.Driver" />
+        <item itemvalue="JUnit.CarTest (1)" />
+        <item itemvalue="JUnit.CarTest.자동차_미국타이어_장착_타이어브랜드_테스트" />
       </list>
     </recent_temporary>
   </component>
@@ -112,7 +168,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576219689798</updated>
-      <workItem from="1576219691359" duration="1551000" />
+      <workItem from="1576219691359" duration="5092000" />
     </task>
     <servers />
   </component>
@@ -124,30 +180,34 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="431" y="202" width="944" height="669" key="#Project_Structure/0.23.1680.1027@0.23.1680.1027" timestamp="1576220824284" />
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1576219988099">
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1576223843914">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1576219988099" />
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1576223843914" />
     <state x="432" y="221" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog" timestamp="1576219731788">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="432" y="221" key="#com.intellij.ide.util.frameworkSupport.AddFrameworkSupportDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576219731788" />
-    <state width="1638" height="280" key="GridCell.Tab.0.bottom" timestamp="1576221102131">
+    <state width="1638" height="280" key="GridCell.Tab.0.bottom" timestamp="1576224228951">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576221102131" />
-    <state width="1638" height="280" key="GridCell.Tab.0.center" timestamp="1576221102130">
+    <state width="1638" height="280" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576224228951" />
+    <state width="1638" height="280" key="GridCell.Tab.0.center" timestamp="1576224228950">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576221102130" />
-    <state width="1638" height="280" key="GridCell.Tab.0.left" timestamp="1576221102130">
+    <state width="1638" height="280" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576224228950" />
+    <state width="1638" height="280" key="GridCell.Tab.0.left" timestamp="1576224228950">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576221102130" />
-    <state width="1638" height="280" key="GridCell.Tab.0.right" timestamp="1576221102131">
+    <state width="1638" height="280" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576224228950" />
+    <state width="1638" height="280" key="GridCell.Tab.0.right" timestamp="1576224228951">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576221102131" />
+    <state width="1638" height="280" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576224228951" />
+    <state x="378" y="198" key="Maven.ArtifactSearchDialog" timestamp="1576225028312">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="378" y="198" key="Maven.ArtifactSearchDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576225028312" />
     <state x="0" y="175" key="SettingsEditor" timestamp="1576220250861">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
