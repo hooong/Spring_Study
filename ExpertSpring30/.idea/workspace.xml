@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="04b17b5a-43d8-4800-b3b9-da36ac490355" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ExpertSpring30.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ExpertSpring30.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/expert002/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/expert002/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +44,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/expert003" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -58,25 +57,26 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/java/expert002" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/expert003" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/java/expert002" />
       <recent name="$PROJECT_DIR$/src/main/java/expert001_03" />
       <recent name="$PROJECT_DIR$/src/main/java/expert001_02" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/java/expert002" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.CarTest (1)">
-    <configuration name="Driver (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="expert002.Driver" />
+  <component name="RunManager" selected="JUnit.CarTest.자동차_코리아타이어_장착_타이어브랜드_테스트">
+    <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="expert003.Driver" />
       <module name="ExpertSpring30" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="expert002.*" />
+          <option name="PATTERN" value="expert003.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -99,33 +99,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CarTest (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ExpertSpring30" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="expert001_03.*" />
+          <option name="PATTERN" value="expert003.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="expert001_03" />
-      <option name="MAIN_CLASS_NAME" value="expert001_03.CarTest" />
+      <option name="PACKAGE_NAME" value="expert003" />
+      <option name="MAIN_CLASS_NAME" value="expert003.CarTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CarTest.자동차_미국타이어_장착_타이어브랜드_테스트 (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ExpertSpring30" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="expert001_03.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="expert001_03" />
-      <option name="MAIN_CLASS_NAME" value="expert001_03.CarTest" />
-      <option name="METHOD_NAME" value="자동차_미국타이어_장착_타이어브랜드_테스트" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -146,13 +130,29 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="CarTest.자동차_코리아타이어_장착_타이어브랜드_테스트" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ExpertSpring30" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="expert003.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="expert003" />
+      <option name="MAIN_CLASS_NAME" value="expert003.CarTest" />
+      <option name="METHOD_NAME" value="자동차_코리아타이어_장착_타이어브랜드_테스트" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CarTest.자동차_코리아타이어_장착_타이어브랜드_테스트" />
+        <item itemvalue="JUnit.CarTest (2)" />
+        <item itemvalue="Application.Driver" />
         <item itemvalue="JUnit.CarTest (1)" />
         <item itemvalue="JUnit.CarTest.자동차_미국타이어_장착_타이어브랜드_테스트" />
-        <item itemvalue="Application.Driver (1)" />
-        <item itemvalue="JUnit.CarTest" />
-        <item itemvalue="JUnit.CarTest.자동차_미국타이어_장착_타이어브랜드_테스트 (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -178,7 +178,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1576219689798</updated>
-      <workItem from="1576219691359" duration="7157000" />
+      <workItem from="1576219691359" duration="7319000" />
+      <workItem from="1576294052438" duration="845000" />
     </task>
     <task id="LOCAL-00001" summary="DI with no spring study">
       <created>1576225227852</created>
@@ -187,7 +188,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576225227852</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="DI with spring study">
+      <created>1576227371380</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1576227371380</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -195,7 +203,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="DI with no spring study" />
-    <option name="LAST_COMMIT_MESSAGE" value="DI with no spring study" />
+    <MESSAGE value="DI with spring study" />
+    <option name="LAST_COMMIT_MESSAGE" value="DI with spring study" />
   </component>
   <component name="WindowStateProjectService">
     <state x="431" y="202" width="944" height="669" key="#Project_Structure" timestamp="1576226460809">
@@ -214,38 +223,38 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576226479453" />
-    <state x="370" y="138" key="CommitChangelistDialog2" timestamp="1576225227644">
+    <state x="370" y="138" key="CommitChangelistDialog2" timestamp="1576227371206">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="370" y="138" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1576225227644" />
-    <state width="1638" height="280" key="GridCell.Tab.0.bottom" timestamp="1576227220394">
+    <state x="370" y="138" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1576227371206" />
+    <state width="1638" height="280" key="GridCell.Tab.0.bottom" timestamp="1576294922446">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576227220394" />
-    <state width="1638" height="280" key="GridCell.Tab.0.center" timestamp="1576227220393">
+    <state width="1638" height="280" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922446" />
+    <state width="1638" height="280" key="GridCell.Tab.0.center" timestamp="1576294922446">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576227220393" />
-    <state width="1638" height="280" key="GridCell.Tab.0.left" timestamp="1576227220392">
+    <state width="1638" height="280" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922446" />
+    <state width="1638" height="280" key="GridCell.Tab.0.left" timestamp="1576294922445">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576227220392" />
-    <state width="1638" height="280" key="GridCell.Tab.0.right" timestamp="1576227220393">
+    <state width="1638" height="280" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922445" />
+    <state width="1638" height="280" key="GridCell.Tab.0.right" timestamp="1576294922446">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576227220393" />
-    <state x="378" y="198" key="Maven.ArtifactSearchDialog" timestamp="1576225459716">
+    <state width="1638" height="280" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922446" />
+    <state x="378" y="198" key="Maven.ArtifactSearchDialog" timestamp="1576294726327">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="378" y="198" key="Maven.ArtifactSearchDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576225459716" />
+    <state x="378" y="198" key="Maven.ArtifactSearchDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576294726327" />
     <state x="0" y="175" key="SettingsEditor" timestamp="1576225950495">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="0" y="175" key="SettingsEditor/0.23.1680.1027@0.23.1680.1027" timestamp="1576225950495" />
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1576225242302">
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1576227380489">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1576225242302" />
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1576227380489" />
     <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1576226112193">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
