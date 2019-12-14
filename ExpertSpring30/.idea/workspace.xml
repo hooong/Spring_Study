@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="04b17b5a-43d8-4800-b3b9-da36ac490355" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,8 +13,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="spring-beans.schema" />
         <option value="Class" />
+        <option value="spring-beans.schema" />
       </list>
     </option>
   </component>
@@ -44,7 +42,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/expert003" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/expert004" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -58,11 +56,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/expert004" />
       <recent name="$PROJECT_DIR$/src/main/java/expert003" />
       <recent name="$PROJECT_DIR$/src/main/resources" />
       <recent name="$PROJECT_DIR$/src/main/java/expert002" />
       <recent name="$PROJECT_DIR$/src/main/java/expert001_03" />
-      <recent name="$PROJECT_DIR$/src/main/java/expert001_02" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="expert004" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources" />
@@ -70,7 +71,20 @@
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CarTest.자동차_코리아타이어_장착_타이어브랜드_테스트">
+  <component name="RunManager" selected="Application.Driver (1)">
+    <configuration name="Driver (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="expert004.Driver" />
+      <module name="ExpertSpring30" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="expert004.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Driver" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="expert003.Driver" />
       <module name="ExpertSpring30" />
@@ -80,21 +94,6 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CarTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="ExpertSpring30" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="expert002.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="expert002" />
-      <option name="MAIN_CLASS_NAME" value="expert002.CarTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -114,18 +113,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CarTest.자동차_미국타이어_장착_타이어브랜드_테스트" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CarTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ExpertSpring30" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="expert002.*" />
+          <option name="PATTERN" value="expert004.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="expert002" />
-      <option name="MAIN_CLASS_NAME" value="expert002.CarTest" />
-      <option name="METHOD_NAME" value="자동차_미국타이어_장착_타이어브랜드_테스트" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="expert004" />
+      <option name="MAIN_CLASS_NAME" value="expert004.CarTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -148,11 +146,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Driver (1)" />
+        <item itemvalue="JUnit.CarTest" />
         <item itemvalue="JUnit.CarTest.자동차_코리아타이어_장착_타이어브랜드_테스트" />
         <item itemvalue="JUnit.CarTest (2)" />
         <item itemvalue="Application.Driver" />
-        <item itemvalue="JUnit.CarTest (1)" />
-        <item itemvalue="JUnit.CarTest.자동차_미국타이어_장착_타이어브랜드_테스트" />
       </list>
     </recent_temporary>
   </component>
@@ -179,7 +177,7 @@
       <option name="presentableId" value="Default" />
       <updated>1576219689798</updated>
       <workItem from="1576219691359" duration="7319000" />
-      <workItem from="1576294052438" duration="845000" />
+      <workItem from="1576294052438" duration="2577000" />
     </task>
     <task id="LOCAL-00001" summary="DI with no spring study">
       <created>1576225227852</created>
@@ -195,7 +193,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576227371380</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="DI with xml property">
+      <created>1576294974080</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1576294974081</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -204,13 +209,14 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="DI with no spring study" />
     <MESSAGE value="DI with spring study" />
-    <option name="LAST_COMMIT_MESSAGE" value="DI with spring study" />
+    <MESSAGE value="DI with xml property" />
+    <option name="LAST_COMMIT_MESSAGE" value="DI with xml property" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="431" y="202" width="944" height="669" key="#Project_Structure" timestamp="1576226460809">
+    <state x="431" y="202" width="944" height="669" key="#Project_Structure" timestamp="1576295434661">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="431" y="202" width="944" height="669" key="#Project_Structure/0.23.1680.1027@0.23.1680.1027" timestamp="1576226460809" />
+    <state x="431" y="202" width="944" height="669" key="#Project_Structure/0.23.1680.1027@0.23.1680.1027" timestamp="1576295434661" />
     <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1576223843914">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -223,26 +229,26 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1576226479453" />
-    <state x="370" y="138" key="CommitChangelistDialog2" timestamp="1576227371206">
+    <state x="370" y="138" key="CommitChangelistDialog2" timestamp="1576294973795">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="370" y="138" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1576227371206" />
-    <state width="1638" height="280" key="GridCell.Tab.0.bottom" timestamp="1576294922446">
+    <state x="370" y="138" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1576294973795" />
+    <state width="1638" height="280" key="GridCell.Tab.0.bottom" timestamp="1576296451655">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922446" />
-    <state width="1638" height="280" key="GridCell.Tab.0.center" timestamp="1576294922446">
+    <state width="1638" height="280" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1576296451655" />
+    <state width="1638" height="280" key="GridCell.Tab.0.center" timestamp="1576296451655">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922446" />
-    <state width="1638" height="280" key="GridCell.Tab.0.left" timestamp="1576294922445">
+    <state width="1638" height="280" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1576296451655" />
+    <state width="1638" height="280" key="GridCell.Tab.0.left" timestamp="1576296451654">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922445" />
-    <state width="1638" height="280" key="GridCell.Tab.0.right" timestamp="1576294922446">
+    <state width="1638" height="280" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1576296451654" />
+    <state width="1638" height="280" key="GridCell.Tab.0.right" timestamp="1576296451655">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="280" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576294922446" />
+    <state width="1638" height="280" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1576296451655" />
     <state x="378" y="198" key="Maven.ArtifactSearchDialog" timestamp="1576294726327">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -255,6 +261,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1576227380489" />
+    <state x="0" y="23" width="100" height="100" key="net.trustx.simpleuml.components.BirdViewFrame" timestamp="1576295286106">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="0" y="23" width="100" height="100" key="net.trustx.simpleuml.components.BirdViewFrame/0.23.1680.1027@0.23.1680.1027" timestamp="1576295286106" />
     <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1576226112193">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -267,6 +277,8 @@
   <component name="simpleUML.UMLToolWindowPlugin">
     <General>
       <option name="birdViewUpdateDelay" value="2000" />
+      <option name="knownFile1" value="file://$PROJECT_DIR$/../jj.suml" />
+      <option name="knownFile0" value="file://$PROJECT_DIR$/../dd.suml" />
       <option name="defaultFileLocation" value="file://$PROJECT_DIR$/.." />
     </General>
     <Classdiagram>
