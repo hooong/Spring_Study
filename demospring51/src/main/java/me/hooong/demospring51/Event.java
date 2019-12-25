@@ -1,34 +1,13 @@
 package me.hooong.demospring51;
 
-import javax.validation.constraints.*;
-
 public class Event {
 
-    Integer id;
+    private Integer id;
 
-    @NotEmpty
-    String title;
+    private String title;
 
-    @NotNull @Min(0)
-    Integer limit;
-
-    @Email
-    String email;
-
-    public Integer getLimit() {
-        return limit;
-    }
-
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public Event(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {
@@ -45,5 +24,13 @@ public class Event {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
     }
 }
