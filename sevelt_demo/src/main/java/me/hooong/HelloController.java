@@ -22,7 +22,7 @@ public class HelloController {
     public String sample() {
         // mv라는 변수로 문자열로 넘기면 view의 이름으로 인식
         // ResponceBody가 없다면.
-        return "/WEB-INF/sample.jsp";
+        return "sample";
     }
 
 }
