@@ -21,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("hi").setViewName("hi");
     }
 
+    // java 객체를 xml로 그 반대로도 변환해줌.
     @Bean
     public Jaxb2Marshaller jaxb2Marshaller() {
         Jaxb2Marshaller jaxb2Marshaller = new Jaxb2Marshaller();
