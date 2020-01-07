@@ -226,4 +226,111 @@
   @RequestMapping(params = "name=hooong")
   ```
 
+
+
+### HEAD, OPTIONS
+
+> ​	직접 구현하지 않아도 spring web mvc에서 자동으로 처리하는 http 메서드로 아래 OPTIONS테스트 결과를 보면 HEAD와 OPTIONS를 만들지 않았어도 Allows에 포함되어 있는 것을 확인할 수 있으.
+
+
+
+- HEAD
+
+  - GET과 동일하지만 body (즉, 응답본문)을 제외하고 응답 헤더만 받는다.
+
+  ```java
+  @Test
+  public void holloTest() throws Exception {
+    mockMvc.perform(head("/hello"))
+      .andDo(print())
+      .andExpect(status().isOk());
+  }
   
+  /** 원래는 return으로 "hello"를 반환하지만 Body가 비어있는 것을 확인할 수 있다.
+  	 MockHttpServletResponse:
+             Status = 200
+      Error message = null
+            Headers = [Content-Type:"text/plain;charset=UTF-8", Content-Length:"5"]
+       Content type = text/plain;charset=UTF-8
+               Body = 
+      Forwarded URL = null
+     Redirected URL = null
+  */
+  ```
+
+- OPTIONS
+
+  - 사용할 수 있는 메서드를 알려준다.
+
+  ```java
+  // Controller에는 @GetMapping과 @PostMapping을 만든 상태.
+  @Test
+  public void holloTest() throws Exception {
+    mockMvc.perform(head("/hello"))
+      .andDo(print())
+      .andExpect(status().isOk());
+  }
+  
+  /** Headers에 Allow로 가능한 요청 메서드들이 반환되었다.
+  	MockHttpServletResponse:
+             Status = 200
+      Error message = null
+            Headers = [Allow:"GET,HEAD,POST,OPTIONS"]
+       Content type = null
+               Body = 
+      Forwarded URL = null
+     Redirected URL = null
+  */
+  ```
+
+
+
+### Custom Annotation
+
+> - Meta Annotation 
+>   - 애노테이션에 사용할 수 있는 애노테이션
+> - Composed Annotation
+>   - 하나 또는 여러개의 메타 애노테이션을 조합해서 만든 애노테이션
+>   - 코드가 간결해지고 보다 구체적인 의미를 부여할 수 있음.
+
+
+
+- @GetHelloMapping
+
+```java
+@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@RequestMapping(method = RequestMethod.GET, value = "/hello")
+public @interface GetHelloMapping {
+}
+```
+
+
+
+- @Retention
+
+  > 해당 애노테이션 정보를 언제까지 유지할 것인지를 설정하는 애노테이션
+
+  ```java
+  @Retention(RetentionPolicy.SOURCE)
+   - 소스코드까지만 유지. 즉, 컴파일하면 정보가 사라짐. 따라서 주석으로 볼 수 있다.
+  @Retention(RetentionPolicy.CLASS)
+   - 컴파일 한 .class파일까지 유지. 즉, 런타임 시 클래스를 메모리로 읽어오면서 정보가 사라짐.
+  @Retention(RetentionPolicy.RUNTIME)
+   - 클래스가 메모리에 올라와있을때에도 정보를 유지.
+  ```
+
+
+
+- @Target
+
+  > 해당 애노테이션을 어디에 사용할 수 있는지에 대한 정보
+
+  `@Target(ElementType.METHOD)`
+
+
+
+- @Documented
+
+  > 해당 애노테이션을 사용한 코드의 문서에 애노테이션 정보를 표기할지를 결정.
