@@ -8,9 +8,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SampleController {
 
-    @GetMapping(value = "/hello", params = "name=hooong")
+    @GetMapping("/hello")
     @ResponseBody
     public String hello() {
         return "hello";
     }
+
+    @PostMapping("/hello")
+    @ResponseBody
+    public String hellopost() {
+        return "hello";
+    }
+
 }

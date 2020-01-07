@@ -193,3 +193,37 @@
 
   - 매치되지 않는 경우에 406 (Not Acceptable) 뱉음.
 
+
+
+### header, param
+
+
+
+- header
+
+  ```java
+  // 특정한 헤더가 있는 요청 처리
+  @RequestMapping(headers = "AUTHORIZATION")
+  @RequestMapping(headers = HttpHeaders.AUTHORIZATION)
+  
+  // 특정한 헤더가 없는 요청 처리
+  @RequestMapping(headers = "!" + HttpHeaders.AUTHORIZATION)
+  
+  // 특정 헤더에 value값도 있는 경우 처리
+  @RequestMapping(headers = HttpHeaders.AUTHORIZATION + "=" + "hooong")
+  ```
+
+- param
+
+  ```java
+  // 특정 param이 있는 요청 처리
+  @RequestMapping(params = "name")
+  
+  // 특정 param이 없는 요청 처리
+  @RequestMapping(params = "!name")
+  
+  // 특정 키/값을 가지는 요청 처리
+  @RequestMapping(params = "name=hooong")
+  ```
+
+  
