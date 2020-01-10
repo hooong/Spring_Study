@@ -405,7 +405,9 @@ public @interface GetHelloMapping {
   }
   ```
 
-- @RequestMapping
+  
+
+  ### @RequestMapping
 
   > - 요청 매개변수 (하부항목에 설명)에 있는 단순 타입의 데이터를 argument로 받는 방법.
   >   - 요청 매개변수에는 '쿼리 매개변수', '폼 데이터'가 있다. 쿼리 매개변수는 `/events?name=hooong` 와 같이 uri에 ?뒤에 더해지는 매개변수이고, 폼 데이터는 말그대로 <form>태그 안에서 넘어오는 매개변수들을 말한다.
@@ -445,7 +447,81 @@ public @interface GetHelloMapping {
   }
   ```
 
+
+
+### Thymeleaf 간단 사용법
+
+- html파일안의 <html>태그 안에 속성을 추가해준다.
+  - `xmlns:th="http://www.thymeleaf.org"`
+
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thymeleaf</title>
+</head>
+<body>
+
+</body>
+</html>
+```
+
+- thymeleaf의 표현식
+
+  ```
+  @{} : URL을 표현하는 식
+  ${} : variable을 표현하는 식
+  *{} : selection 표현식
+  ```
+
+  - 참고 : [https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html](https://www.thymeleaf.org/doc/articles/standarddialect5minutes.html)
+
+- thymeleaf를 활용하여 form만들어보기
+
+  ```java
+  @Controller
+  public class SampleController {
   
+      @GetMapping("/events/form")
+      public String eventsForm(Model model) {
+        	// "event"라는 이름으로 새로운 event객체를 넘겨준다.
+          model.addAttribute("event",new Event());
+          return "/events/form";
+      }
+  
+      @PostMapping("/events")
+      @ResponseBody
+      public Event getEvent(@RequestParam String name,
+                            @RequestParam Integer limit) {
+          Event event = new Event();
+          event.setName(name);
+          event.setLimit(limit);
+          return event;
+      }
+  }
+  ```
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+      <title>Create New Event</title>
+  </head>
+  <body>
+  <!-- Controller에서 받은 "event"를 th:object를 통해 받아온다. -->
+  <form action="#" th:action="@{/events}" method="post" th:object="${event}">
+    	<!-- *{}를 써서 event객체안의 name과 limit 속성을 selection 할 수 있다. -->
+      <input type="text" title="name" th:field="*{name}"/>
+      <input type="text" title="limit" th:field="*{limit}"/>
+      <input type="submit">
+  </form>
+  </body>
+  </html>
+  ```
+
+
 
 
 
