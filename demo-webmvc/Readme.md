@@ -334,3 +334,118 @@ public @interface GetHelloMapping {
 - @Documented
 
   > 해당 애노테이션을 사용한 코드의 문서에 애노테이션 정보를 표기할지를 결정.
+
+
+
+### HandlerMethod - URI패턴
+
+
+
+- @PathVariable
+
+  > - request uri패턴에서 일부를 argument로 받는 방법.
+  > - Uri 패턴에서 이름과 argument의 이름이 다를경우 ()안에 명시해준다.
+  >   - `@PathVariable("id") Integer idvalue`
+  > - type conversion을 알아서 해준다. (String으로 받은 id값이 integer로 변환될 수 있다.)
+  > - 값이 반드시 있어야 한다. (required = false)옵션으로 바꿀 수 있긴하다.
+  > - Optional을 지원한다. (`@PathVariable Optional<String> id`)
+
+  - 사용예제
+
+  ```java
+  @GetMapping("/events/{id}")
+  @ResponseBody
+  public Event getEvent(@PathVariable Integer id) {
+    Event event = new Event();
+    event.setId(idvalue);
+    return event;
+  }
+  ```
+
+- @MatrixVariable
+
+  > - @PathVariable과 다르게 키/값 쌍의 데이터를 argument로 받는 방법.
+  >
+  > - Type conversion을 지원
+  >
+  > - 값이 반드시 있어야 한다. 
+  >
+  > - Optional을 지원
+  >
+  > - 이 Annotation을 사용하려면 아래와 같은 설정으로 이 기능을 활성화 해야함.
+  >
+  >   ```java
+  >   @Configuration
+  >   public class WebConfig implements WebMvcConfigurer {
+  >   
+  >       @Override
+  >       public void configurePathMatch(PathMatchConfigurer configurer) {
+  >           UrlPathHelper urlPathHelper = new UrlPathHelper();
+  >           // 세미콜론을 없애지 않도록 설정.
+  >           urlPathHelper.setRemoveSemicolonContent(false);
+  >           configurer.setUrlPathHelper(urlPathHelper);
+  >       }
+  >     
+  >   }
+  >   ```
+
+  - 사용예제
+
+  ```java
+  // request : '../events/1;name=hooong'
+  
+  @GetMapping("/events/{id}")
+  @ResponseBody
+  public Event getEvent(@PathVariable Integer id, 
+                        @MatrixVariable String name) {
+    Event event = new Event();
+    event.setId(idvalue);
+    event.setName(name);
+    return event;
+  }
+  ```
+
+- @RequestMapping
+
+  > - 요청 매개변수 (하부항목에 설명)에 있는 단순 타입의 데이터를 argument로 받는 방법.
+  >   - 요청 매개변수에는 '쿼리 매개변수', '폼 데이터'가 있다. 쿼리 매개변수는 `/events?name=hooong` 와 같이 uri에 ?뒤에 더해지는 매개변수이고, 폼 데이터는 말그대로 <form>태그 안에서 넘어오는 매개변수들을 말한다.
+  >
+  > - Type Conversion 지워
+  >
+  > - 값이 반드시 있어야 한다. ( required옵션과 Optional을 사용하여 설정을 바꿀 수도 있다.)
+  >
+  > - Map을 사용해서 받아올 수도 있다. 그러나 그냥 하나하나 받아오는게 편할 수 있다.
+  >
+  >   ```java
+  >   @PostMapping("/events")
+  >   @ResponseBody
+  >   public Event getEvent(@RequestParam Map<String, String> params) {
+  >       Event event = new Event();
+  >       event.setName(params.get("name"));
+  >       return event;
+  >   }
+  >   ```
+  >
+  > - 생략이 가능하다. => 생략하지 않고 명시하는게 좋을 수 있다.
+
+  - 사용예제
+
+  ```java
+  // request : '/events?name=hooong&limit=5'
+  //		또는 '/events'에 form 데이터에 name와 limit정보를 담고있음.
+  
+  @PostMapping("/events")
+  @ResponseBody
+  public Event getEvent(@RequestParam String name,
+                        @RequestParam Integer limit) {
+    Event event = new Event();
+    event.setName(name);
+    event.setLimit(limit);
+    return event;
+  }
+  ```
+
+  
+
+
+

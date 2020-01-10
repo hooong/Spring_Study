@@ -6,16 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.util.Map;
 
 @Controller
 public class SampleController {
 
-    @GetMapping("/events/{id}")
+    @PostMapping("/events")
     @ResponseBody
-    public Event getEvent(@PathVariable("id") Integer idvalue, @MatrixVariable String name) {
+    public Event getEvent(@RequestParam String name,
+                          @RequestParam Integer limit) {
         Event event = new Event();
-        event.setId(idvalue);
         event.setName(name);
+        event.setLimit(limit);
         return event;
     }
 }
