@@ -523,5 +523,70 @@ public @interface GetHelloMapping {
 
 
 
+## @ModelAttribute
 
+> - @RequestMapping에서 Map을 사용해서 name과 limit을 한번에 받아와서 하나의 객체로 만들었었다. 반면 @ModelAttribute는 만들어져있는 Event라는 객체로 받아올 수 있게해주는 애노테이션이다.
+> - 생략이 가능하지만 가독성을 위해 써주는게 좋을 것 같다.
 
+```java
+// controller
+@PostMapping("/events")
+@ResponseBody
+public Event getEvent(@ModelAttribute Event event) {
+  return event;
+}
+
+// test code
+@Test
+public void postEvent() throws Exception {
+  mockMvc.perform(post("/events")
+                  .param("name","hooong")
+                  .param("limit","10"))
+    .andDo(print())
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("name").value("hooong"));
+}					// => test 성공.
+
+@Test
+public void postEvent() throws Exception {
+  mockMvc.perform(post("/events")
+                  .param("name","hooong")
+                  .param("limit","hong"))			// Integer인 'limit'에 문자열을 넣음
+    .andDo(print())
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("name").value("hooong"));
+}					// => BindException 400 error 발생
+```
+
+- 위에서의 bindException을 다루고 싶은 경우 BindingResult라는 아규먼트를 추가해준다.
+
+```java
+// controller
+@PostMapping("/events")
+@ResponseBody
+public Event getEvent(@Valid @ModelAttribute Event event, BindingResult bindingResult) {
+  if(bindingResult.hasErrors()) {
+    System.out.println("=====================");
+    bindingResult.getAllErrors().forEach(c -> {
+      System.out.println(c.toString());
+    });
+  }
+  return event;
+}
+
+// test code
+@Test
+public void postEvent() throws Exception {
+  mockMvc.perform(post("/events")
+                  .param("name","hooong")
+                  .param("limit","hong"))			// Integer인 'limit'에 문자열을 넣음
+    .andDo(print())
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("name").value("hooong"));
+}					// => 위에서와 같은 테스트이지만 BindingResult가 에러를 처리해줘서 test는 성공.
+/*
+- bindingResult에서 에러에 대한 정보를 넘겨받아 출력. => name는 넘겨받지만 limit은 convert를 하지 못하여 null값이 설정된다.
+
+"Field error in object 'event' on field 'limit': rejected value [hong]; codes [typeMismatch.event.limit,typeMismatch.limit,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [event.limit,limit]; arguments []; default message [limit]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.lang.Integer' for property 'limit'; nested exception is java.lang.NumberFormatException: For input string: "hong"]"
+*/
+```
