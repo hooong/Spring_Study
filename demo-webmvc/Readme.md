@@ -687,3 +687,93 @@ public Event getEvent(@Validated(Event.ValidateLimit.class) @ModelAttribute Even
 }
 ```
 
+
+
+### form(submit) 에러처리
+
+> form을 사용해 데이터를 submit을 하려할때 @valid를 통해 검증이 되지 않으면 BindingResult에 에러 정보가 담긴다고 했는데, 이 에러를 view를 통해 띄워주는 방법에 대해 알아보겠습니다.
+
+<center><img width="507" alt="Screen Shot 2020-01-16 at 8 05 25 PM" src="https://user-images.githubusercontent.com/37801041/72519901-a2c30e80-389b-11ea-9798-c0ccd59a3236.png"></center>
+
+```java
+// Handler
+@PostMapping("/events")
+public String createEvent(@Validated @ModelAttribute Event event,
+                          BindingResult bindingResult,
+                          Model model) {
+  // 바인딩 에러가 발생하면 /events/form으로 요청이 보내진다.
+  if(bindingResult.hasErrors()) {
+    return "/events/form";
+  }
+
+  // Post -> Redirect -> Get
+  // redirection을 해주어야 Post에서 새로고침을 했을 경우 Form이 중복 submit되는 것을 막을 수 있다.
+  return "redirect:/events/list";
+}
+
+@GetMapping("/events/list")
+public String getEvents(Model model) {
+  Event event1 = new Event();
+  event1.setName("hooong");
+  event1.setLimit(10);
+
+  Event event2 = new Event();
+  event2.setName("hooong2");
+  event2.setLimit(20);
+
+  List<Event> eventList = new ArrayList<>();
+  eventList.add(event1);
+  eventList.add(event2);
+
+  model.addAttribute(eventList);
+
+  return "/events/list";
+}
+```
+
+- ### `events/form.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Event</title>
+</head>
+<body>
+<form action="#" th:action="@{/events}" method="post" th:object="${event}">
+  	<!-- 바로 아래 p태그부분의 타임리프를 사용해 에러에 대한 정보를 띄워준다. -->	
+    <p th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">Incorrect date</p>
+    <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
+  
+    <input type="text" title="name" th:field="*{name}"/>
+    <input type="text" title="limit" th:field="*{limit}"/>
+    <input type="submit">
+</form>
+</body>
+</html>
+```
+
+- ### `events/list.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Event</title>
+</head>
+<body>
+<a th:href="@{/events/form}">Create New Event</a>
+  
+<!-- 타임리프를 사용해 받아온 eventList를 보여주는 코드 -->
+<div th:unless="${#lists.isEmpty(eventList)}">
+    <ul th:each="event: ${eventList}">
+        <p th:text="${event.Name}">Event Name</p>
+    </ul>
+</div>
+
+</body>
+</html>
+```
+
