@@ -341,7 +341,7 @@ public @interface GetHelloMapping {
 
 
 
-- @PathVariable
+- ### @PathVariable
 
   > - request uri패턴에서 일부를 argument로 받는 방법.
   > - Uri 패턴에서 이름과 argument의 이름이 다를경우 ()안에 명시해준다.
@@ -350,7 +350,7 @@ public @interface GetHelloMapping {
   > - 값이 반드시 있어야 한다. (required = false)옵션으로 바꿀 수 있긴하다.
   > - Optional을 지원한다. (`@PathVariable Optional<String> id`)
 
-  - 사용예제
+  - ##### 사용예제
 
   ```java
   @GetMapping("/events/{id}")
@@ -362,7 +362,7 @@ public @interface GetHelloMapping {
   }
   ```
 
-- @MatrixVariable
+- ### @MatrixVariable
 
   > - @PathVariable과 다르게 키/값 쌍의 데이터를 argument로 받는 방법.
   >
@@ -389,7 +389,7 @@ public @interface GetHelloMapping {
   >   }
   >   ```
 
-  - 사용예제
+  - ##### 사용예제
 
   ```java
   // request : '../events/1;name=hooong'
