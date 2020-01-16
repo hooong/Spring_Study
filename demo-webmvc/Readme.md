@@ -529,7 +529,7 @@ public @interface GetHelloMapping {
 > - 생략이 가능하지만 가독성을 위해 써주는게 좋을 것 같다.
 
 ```java
-// controller
+// Handler
 @PostMapping("/events")
 @ResponseBody
 public Event getEvent(@ModelAttribute Event event) {
@@ -561,7 +561,7 @@ public void postEvent() throws Exception {
 - 위에서의 bindException을 다루고 싶은 경우 BindingResult라는 아규먼트를 추가해준다.
 
 ```java
-// controller
+// Handler
 @PostMapping("/events")
 @ResponseBody
 public Event getEvent(@Valid @ModelAttribute Event event, BindingResult bindingResult) {
@@ -590,3 +590,100 @@ public void postEvent() throws Exception {
 "Field error in object 'event' on field 'limit': rejected value [hong]; codes [typeMismatch.event.limit,typeMismatch.limit,typeMismatch.java.lang.Integer,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [event.limit,limit]; arguments []; default message [limit]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.lang.Integer' for property 'limit'; nested exception is java.lang.NumberFormatException: For input string: "hong"]"
 */
 ```
+
+
+
+### @Valid
+
+- 바인딩을 한 뒤 값에 대한 검증을 하기위해서는 @Valid 또는 @Validated를 사용하면 된다.
+
+```java
+// Handler
+@PostMapping("/events")
+@ResponseBody
+public Event getEvent(@Valid @ModelAttribute Event event, BindingResult bindingResult) {
+  if(bindingResult.hasErrors()) {
+    System.out.println("=====================");
+    bindingResult.getAllErrors().forEach(c -> {
+      System.out.println(c.toString());
+    });
+  }
+  return event;
+}
+
+// Event Class
+public class Event {
+
+    private Integer id;
+
+    private String name;
+
+    @Min(0)		// 0보다 작은 값은 허용하지 않는다.
+    private Integer limit;
+		
+  	... (이하 생략)
+}
+
+// Test Code
+@Test
+public void postEvent() throws Exception {
+  mockMvc.perform(post("/events?name=hooong")
+                  .param("limit","-10"))
+    .andDo(print())
+    .andExpect(status().isOk())
+    .andExpect(jsonPath("name").value("hooong"));
+} // => test는 성공. bindingResult를 통해 validation에러가 출력되는 것을 확인할 수 있다.
+```
+
+<br>
+
+### @Validated
+
+- @Valid를 사용하면 그룹을 지정할 수 없지만 @Validated를 사용하면 그룹을 지정할 수 있다.
+
+```java
+// Event Class
+public class Event {
+	
+  	// 그룹을 사용하기 위한 interface를 생성.
+    interface ValidateLimit {}
+    interface ValidateName {}
+
+    private Integer id;
+		
+  	// @NotBlank에는 ValidateName이라는 그룹을 지정
+    @NotBlank(groups = ValidateName.class)
+    private String name;
+		
+  	// @Min에는 ValidateLimit이라는 그룹을 지정
+    @Min(value = 0, groups = ValidateLimit.class)
+    private Integer limit;
+	
+  	... (이하 생략)
+}
+
+// Handler
+@PostMapping("/events")
+@ResponseBody
+//	ValidateName라는 그룹을 지정해서 @NotBlank만 검증을 한다.
+public Event getEvent(@Validated(Event.ValidateName.class) @ModelAttribute Event event, 													BindingResult bindingResult) {
+  if(bindingResult.hasErrors()) {
+    System.out.println("=====================");
+    bindingResult.getAllErrors().forEach(c -> {
+      System.out.println(c.toString());
+    });
+  }
+  return event;
+}
+// 또는 ValidateLimit을 지정하여 @Min(0)만을 검증.
+public Event getEvent(@Validated(Event.ValidateLimit.class) @ModelAttribute Event event, 													BindingResult bindingResult) {
+  if(bindingResult.hasErrors()) {
+    System.out.println("=====================");
+    bindingResult.getAllErrors().forEach(c -> {
+      System.out.println(c.toString());
+    });
+  }
+  return event;
+}
+```
+
