@@ -781,7 +781,7 @@ public String getEvents(Model model) {
 
 ### @SessionAttributes
 
->장바구니 또는 입력을 여러 페이지를 통하여 받는 경우에는 특정 개체들에대한 정보를 계속 유지해야한다. 이것을 저장해주는 것이 Session이다. 그럼 Session을 사용하는 방법들에 대하여 알아보자.
+>장바구니 또는 입력을 여러 페이지를 통하여 받는 경우에는 특정 개체들에대한 정보를 계속 유지해야한다. 이 정보를 유지해주는 것이 Session이다. 그럼 Session을 사용하는 방법들에 대하여 알아보자.
 
 - HttpSessions
 
@@ -814,6 +814,102 @@ public String getEvents(Model model) {
   }
   ```
 
-  > @Controller 애노테이션 밑에 @SessionAttributes("event")라고 써주게되면 자동으로 "event"라는 이름으로 model이 만들어질때 session에도 저장을 해준다.
+  > @Controller 애노테이션 밑에 @SessionAttributes("event")라고 써주게되면 자동으로 "event"라는 이름으로 model이 만들어질때 session에도 바인딩이 된다.
 
   
+
+<br>
+
+### @SessionAttributes를 사용하여 멀티 폼 서브밋 구현
+
+> 예제로 Event에 이름을 넣는 페이지, 인원제한을 넣는 페이지를 나누어 폼으로 입력을 받는 것을 구현해 볼 것이다.
+
+- Controller
+
+  ```java
+  @Controller
+  @SessionAttributes("event")			// 세션을 자동으로 바인딩해주기 위한 애노테이션
+  public class SampleController {
+  		
+    	// name을 받는 form을 띄워주는 GET
+      @GetMapping("/events/form/name")
+      public String eventsFormName(Model model) {
+          model.addAttribute("event",new Event());
+          return "/events/form-name";
+      }
+  		
+    	// name을 입력받은 form을 처리하는 POST
+      @PostMapping("/events/form/name")
+      public String eventsFormNameSubmit(@Validated @ModelAttribute Event event,
+                                BindingResult bindingResult) {
+          if(bindingResult.hasErrors()) {
+              return "/events/form-name";
+          }
+          return "redirect:/events/form/limit";
+      }
+  		
+    	// limit을 받는 form을 띄워주는 GET
+    	// @ModelAttribute Event를 통하여 Session의 event를 그대로 사용한다.
+      @GetMapping("/events/form/limit")
+      public String eventsFormLimit(@ModelAttribute Event event, Model model) {
+          model.addAttribute("event",event);
+          return "/events/form-limit";
+      }
+  
+    	// limit을 받은 form을 처리하는 POST
+      @PostMapping("/events/form/limit")
+      public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
+                                         BindingResult bindingResult,
+                                         SessionStatus sessionStatus) {
+          if(bindingResult.hasErrors()) {
+              return "/events/form-limit";
+          }
+        	// setComplete()를 사용하면 Session을 비울 수 있다.
+          sessionStatus.setComplete();
+          return "redirect:/events/list";
+      }
+  		
+    	
+      @GetMapping("/events/list")
+      public String getEvents(Model model) {
+          // ... (events를 보여주는 로직 작성)
+      }
+  }
+  ```
+
+- View(html)
+
+  ```html
+  <!-- 'form-name.html' -->
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+  </head>
+  <body>
+  <form action="#" th:action="@{/events/form/name}" method="post" th:object="${event}">
+      <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Incorrect date</p>
+      Name : <input type="text" title="name" th:field="*{name}"/>
+      <input type="submit">
+  </form>
+  </body>
+  </html>
+  
+  <!-- 'form-limit.html' -->
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+  </head>
+  <body>
+  <form action="#" th:action="@{/events/form/limit}" method="post" th:object="${event}">
+      <p th:if="${#fields.hasErrors('limit')}" th:errors="*{limit}">Incorrect date</p>
+      Limit : <input type="text" title="limit" th:field="*{limit}"/>
+      <input type="submit">
+  </form>
+  </body>
+  </html>
+  ```
+
+  
+
