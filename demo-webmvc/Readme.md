@@ -687,7 +687,7 @@ public Event getEvent(@Validated(Event.ValidateLimit.class) @ModelAttribute Even
 }
 ```
 
-
+<br>
 
 ### form(submit) 에러처리
 
@@ -777,3 +777,43 @@ public String getEvents(Model model) {
 </html>
 ```
 
+<br>
+
+### @SessionAttributes
+
+>장바구니 또는 입력을 여러 페이지를 통하여 받는 경우에는 특정 개체들에대한 정보를 계속 유지해야한다. 이것을 저장해주는 것이 Session이다. 그럼 Session을 사용하는 방법들에 대하여 알아보자.
+
+- HttpSessions
+
+  ```java
+  @GetMapping("/events/form")
+  public String eventsForm(Model model, HttpSession httpSession) {
+    Event newEvent = new Event();
+    newEvent.setLimit(50);
+    model.addAttribute("event",newEvent);
+    // newEvent를 "event"라는 이름으로 session에 담는다.
+    httpSession.setAttribute("event",newEvent);
+    return "/events/form";
+  }
+  ```
+
+- @SessionAttributes
+
+  ```java
+  @Controller
+  @SessionAttributes("event")
+  public class SampleController {
+  
+      @GetMapping("/events/form")
+      public String eventsForm(Model model) {
+          Event newEvent = new Event();
+          newEvent.setLimit(50);
+          model.addAttribute("event",newEvent);
+          return "/events/form";
+      }
+  }
+  ```
+
+  > @Controller 애노테이션 밑에 @SessionAttributes("event")라고 써주게되면 자동으로 "event"라는 이름으로 model이 만들어질때 session에도 저장을 해준다.
+
+  
