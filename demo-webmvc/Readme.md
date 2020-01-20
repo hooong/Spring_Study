@@ -980,3 +980,122 @@ public String getEvents(Model model, HttpSession httpSession) {
 ```
 
 > @SessionAttribute는 타입 컨버전을 자동으로 지원을 해주지만 HttpSession을 통하여 가져오게 되면 Object로 가져오기 때문에 위의 코드처럼 컨버전을 따로 해주어야하는 번거로움이 있을 수 있다.
+
+<br>
+
+### RedirectAttributes
+
+> Spring Boot에서는 기본적으로 Model에 들어있는  Primitive type( 기본 자료형 ex_int,long... )의 데이터가 URI 쿼리 매개변수로 추가가 되지 않게끔 설정이 되어있다.
+
+- Spring Boot의 설정을 바꾸어 URI 쿼리 매개변수에 추가시키기
+
+  - `application.properties`에 설정 추가하기
+
+    ```
+    spring.mvc.ignore-default-model-on-redirect=false
+    // 기본적으로 true값으로 추가되지 않게끔 설정되었음.
+    ```
+
+  - `Model`에 데이터 담기
+
+    ```java
+    @PostMapping("/events/form/limit")
+    public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
+                                        BindingResult bindingResult,
+                                        SessionStatus sessionStatus,
+                                        Model model) {
+      if(bindingResult.hasErrors()) {
+        return "/events/form-limit";
+      }
+      sessionStatus.setComplete();
+      
+      // model에 name와 limit을 담아준다.
+      model.addAttribute("name",event.getName());
+      model.addAttribute("limit",event.getLimit());
+      return "redirect:/events/list";
+    }
+    ```
+
+  - URI 확인해보기
+
+    <center><img width="372" alt="Screen Shot 2020-01-20 at 11 14 11 PM" src="https://user-images.githubusercontent.com/37801041/72733195-b4c5e980-3bda-11ea-888b-f316b714a8d8.png"></center>
+
+    <br>
+
+- RedirectAttributes를 사용하여 추가하기
+
+  - Spring Boot의 기본설정을 건드릴 필요가 없다.
+
+  - redirect시 원하는 값만 전달할 수 있다.
+
+  - RedirectAttributes를 사용해 데이터 담기
+
+    ```java
+    @PostMapping("/events/form/limit")
+    public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
+                                        BindingResult bindingResult,
+                                        SessionStatus sessionStatus,
+                                        RedirectAttributes attributes) {
+        if(bindingResult.hasErrors()) {
+          return "/events/form-limit";
+        }
+        sessionStatus.setComplete();
+      
+      	// attributes에 name와 limit을 모두 넣어보았다.
+      	// name이나 limit 중 원하는 값만 넣을수도 있다.
+        attributes.addAttribute("name",event.getName());
+        attributes.addAttribute("limit",event.getLimit());
+        return "redirect:/events/list";
+    }
+    ```
+
+    <br>
+
+- redirect 요청 처리 시 쿼리 매개변수 다루기
+
+  - @RequestParam
+
+    ```java
+    @GetMapping("/events/list")
+    public String getEvents(@RequestParam String name,
+                            @RequestParam Integer limit,
+                            Model model,
+                            @SessionAttribute LocalDateTime visitTime) {
+        System.out.println(visitTime);
+    
+      	Event newEvent = new Event();
+    	  newEvent.setName(name);
+        newEvent.setLimit(limit);
+    
+        List<Event> eventList = new ArrayList<>();
+        eventList.add(event);
+    
+        model.addAttribute(eventList);
+    
+        return "/events/list";
+    }
+    ```
+
+  - @ModelAttirbute
+
+    ```java
+    @GetMapping("/events/list")
+    public String getEvents(@ModelAttribute("newEvent") Event event,
+                            Model model,
+                            @SessionAttribute LocalDateTime visitTime) {
+        System.out.println(visitTime);
+    
+        List<Event> eventList = new ArrayList<>();
+        eventList.add(event);
+    
+        model.addAttribute(eventList);
+    
+        return "/events/list";
+    }
+    ```
+
+    > @ModelAttribute로 받을 때 주의할 점
+    >
+    > - Controller에서 SessionAttributes로 지정해놓은 이름과 동일하게 지정을 하면 안된다.
+    > - 동일할 경우 session에서 찾아오기 때문에 session이 비어있으면 에러가 발생한다. 비어있지 않다해도 URI를 통해 받는 값과 동일하지 않은 값이 올 수 있다.
+    > - 따라서 위의 ("newEvent")처럼 다른 이름으로 지정을 해주거나 event의 이름을 바꾸면 된다.

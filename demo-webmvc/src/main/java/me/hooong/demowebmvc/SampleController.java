@@ -8,6 +8,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.model.IModel;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
@@ -45,26 +47,35 @@ public class SampleController {
 
     @PostMapping("/events/form/limit")
     public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
-                                       BindingResult bindingResult,
-                                       SessionStatus sessionStatus) {
+                                        BindingResult bindingResult,
+                                        SessionStatus sessionStatus,
+                                        RedirectAttributes attributes) {
         if(bindingResult.hasErrors()) {
             return "/events/form-limit";
         }
         sessionStatus.setComplete();
+        attributes.addAttribute("name",event.getName());
+        attributes.addAttribute("limit",event.getLimit());
         return "redirect:/events/list";
     }
 
     @GetMapping("/events/list")
-    public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime
-            , HttpSession httpSession) {
+    public String getEvents(@ModelAttribute("newEvent") Event event,
+                            Model model,
+                            @SessionAttribute LocalDateTime visitTime) {
         System.out.println(visitTime);
-        LocalDateTime visitTime = (LocalDateTime) httpSession.getAttribute("visitTime");
-        Event event1 = new Event();
-        event1.setName("hooong");
-        event1.setLimit(10);
+
+//        Event newEvent = new Event();
+//        newEvent.setName(name);
+//        newEvent.setLimit(limit);
+
+        Event spring = new Event();
+        spring.setName("hooong");
+        spring.setLimit(10);
 
         List<Event> eventList = new ArrayList<>();
-        eventList.add(event1);
+        eventList.add(spring);
+        eventList.add(event);
 
         model.addAttribute(eventList);
 
