@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpSession;
 import javax.swing.tree.ExpandVetoException;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +55,10 @@ public class SampleController {
     }
 
     @GetMapping("/events/list")
-    public String getEvents(Model model) {
+    public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime
+            , HttpSession httpSession) {
+        System.out.println(visitTime);
+        LocalDateTime visitTime = (LocalDateTime) httpSession.getAttribute("visitTime");
         Event event1 = new Event();
         event1.setName("hooong");
         event1.setLimit(10);

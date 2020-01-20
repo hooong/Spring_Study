@@ -911,5 +911,72 @@ public String getEvents(Model model) {
   </html>
   ```
 
-  
+  <br>
 
+### @SessionAttribute
+
+> @SessionAttributes와는 's'가 붙고 안붙고인데 하는 일이 다르다. 이 점을 유의 해야한다.
+
+- @SessionAttributes는 애노테이션이 붙어있는 해당 컨트롤러 내에서만 동작을 한다. 따라서 같은 컨트롤러 안에서 다루는 특정 모델 객체를 세션에 넣고 공유할 때 사용하는 것이다.
+
+- @SessionAttribute는 컨트롤러 밖(인터셉터, 필터 등)에서 만들어진 세션을 가져올 수 있다.
+
+  - 하지만  session에 데이터를 넣고 빼고 싶은 경우에는 HttpSession을 사용해야 한다.
+
+  <br>
+
+#### 사용자가 접속한 시간 세션 저장 구현
+
+- `VisitTimeInterceptor`라는 이름의 인터셉터를 만든다.
+
+```java
+public class VisitTimeInterceptor implements HandlerInterceptor {
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        HttpSession session = request.getSession();
+      	// session에 "visitTime"값이 없으면 지금 시간으로 set한다.
+        if (session.getAttribute("visitTime") == null) {
+            session.setAttribute("visitTime", LocalDateTime.now());
+        }
+        return true;
+    }
+}
+```
+
+- `WebMvcConfiguration`에 등록을 해준다.
+
+```java
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new VisitTimeInterceptor());
+    }
+}
+```
+
+- `@SessionAttribute`를 사용하여 데이터 띄워보기
+
+```java
+@GetMapping("/events/list")
+public String getEvents(Model model, @SessionAttribute LocalDateTime visitTime) {
+    System.out.println(visitTime);
+  	// 새로고침을 해도 처음에 들어온 시간이 출력되는 것을 확인할 수 있다.
+
+    // ... (이하 생략)
+}
+```
+
+- `HttpSession`을 사용하여 데이터 띄워보기
+
+```java
+@GetMapping("/events/list")
+public String getEvents(Model model, HttpSession httpSession) {
+    LocalDateTime visitTime = (LocalDateTime) httpSession.getAttribute("visitTime");
+
+    // ... (이하 생략)
+}
+```
+
+> @SessionAttribute는 타입 컨버전을 자동으로 지원을 해주지만 HttpSession을 통하여 가져오게 되면 Object로 가져오기 때문에 위의 코드처럼 컨버전을 따로 해주어야하는 번거로움이 있을 수 있다.
