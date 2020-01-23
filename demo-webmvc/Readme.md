@@ -1028,7 +1028,9 @@ public String getEvents(Model model, HttpSession httpSession) {
 
   - redirect시 원하는 값만 전달할 수 있다.
 
-  - RedirectAttributes를 사용해 데이터 담기
+  - RedirectAttributes를 사용해 데이터 담기 
+
+    > RedirectAttributes로 데이터를 넘기려면 String으로 바뀔 수 있는 값만 담을 수 있다.
 
     ```java
     @PostMapping("/events/form/limit")
@@ -1099,3 +1101,166 @@ public String getEvents(Model model, HttpSession httpSession) {
     > - Controller에서 SessionAttributes로 지정해놓은 이름과 동일하게 지정을 하면 안된다.
     > - 동일할 경우 session에서 찾아오기 때문에 session이 비어있으면 에러가 발생한다. 비어있지 않다해도 URI를 통해 받는 값과 동일하지 않은 값이 올 수 있다.
     > - 따라서 위의 ("newEvent")처럼 다른 이름으로 지정을 해주거나 event의 이름을 바꾸면 된다.
+
+
+
+### FlashAttribute
+
+> RedirectAttributes와 비슷하지만 FlashAttribute는 요청을 보낼 때 session에 넣고 넘겨준다. 그리고 바로 다음 요청이 처리되면 session에서 지워진다. 따라서 일회성이다.
+
+- 사용법
+
+```java
+@PostMapping("/events/form/limit")
+public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
+                                    BindingResult bindingResult,
+                                    SessionStatus sessionStatus,
+                                    RedirectAttributes attributes) {
+    if(bindingResult.hasErrors()) {
+      return "/events/form-limit";
+    }
+    sessionStatus.setComplete();
+  	// RedirectAttributes안에 addFlashAttribute를 사용한다.
+    attributes.addFlashAttribute("newEvent",event);
+    return "redirect:/events/list";
+}
+```
+
+- `@ModelAttribute("newEvent") Event event`를 통하여 받아도 되지만 FlashAttr의 경우 자동으로  Model에 넣어준다. 
+
+  ```java
+  Event newEvent = (Event) model.asMap().get("newEvent");
+  ```
+
+  > Object로 넘어오기때문에 (Event)로 타입을 컨버전해주어야한다.
+
+- `RedirectAttributes`는 String으로 바뀔 수 있는 값만 넣어줄 수 있었지만 `FlashAttribute`는 임의의 객체를 저장할 수도 있다.
+
+- `RedirectAttributes`는 URI 쿼리 파라미터로 데이터를 담아 넘기지만 `FlashAttribute`는 session에 담아 넘기므로 URI에 데이터가 노출되지않는다.
+
+
+
+## MultipartFile
+
+> 파일 업로드를 할때 사용하는 핸들러 메소드 argument
+
+<br>
+
+- Spring MVC의 경우에는 MultipartResolver 빈이 설정되어있어야한다. 
+
+  ```java
+  // example MultipartResolver bean
+  @Bean(name = "multipartResolver")
+  public CommonsMultipartResolver multipartResolver() {
+      CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+      multipartResolver.setMaxUploadSize(100000);
+      return multipartResolver;
+  }
+  ```
+
+- Spring Boot에서는 자동으로 설정이 된다. => 따라서  properties에서 최대 요청 가능 용량같은 옵션을 설정할 수 있다.
+
+- POST요청을 보낼 때 `enctype="multipart/form-data"`가 있어야 파일을 참조할 수 있다.
+
+- List<MultipartFile>을 사용해 여러 파일을 참조할 수 있다.
+
+  <br>
+
+  ### 파일 업로드 구현
+
+- 파일 업로드 form 만들기
+
+  - `files/index.html`
+
+  ```html
+  <form method="POST" enctype="multipart/form-data" action="#" th:action="@{/file}">
+      File: <input type="file" name="file"/>
+      <input type="submit" value="Upload"/>
+  </form>
+  ```
+
+  - `FileController.java`
+
+  ```java
+  @Controller
+  public class FileController {
+  
+      @GetMapping("/file")
+      public String fileUploadForm() {
+          return "files/index";
+      }
+    
+  }
+  ```
+
+<br>
+
+- POST로 오는 파일 업로드 요청 처리하기
+
+  - `FileController.java`
+
+  ```java
+  @Controller
+  public class FileController {
+  
+      @GetMapping("/file")
+      public String fileUploadForm() {
+          return "files/index";
+      }
+  
+      @PostMapping("/file")
+      public String fileUpload(@RequestParam MultipartFile file,
+                               RedirectAttributes attributes) {
+          // save...
+        
+          System.out.println(file.getName());		// getName : html에서 넘어오는 name ('file')
+          System.out.println(file.getOriginalFilename());
+        																				// getOriginalFilename : 원래 파일명
+        
+          String message = file.getOriginalFilename() + " is uploaded";
+        	
+        	// 파일 업로드가 되었다는 message를 'files/index.html'에서 띄워준다.
+          attributes.addFlashAttribute("message", message);
+          return "redirect:/file";
+      }
+  }
+  ```
+
+  - `message`를 뛰우기 위한 html 코드
+
+  ```html
+  <div th:if="${message}">
+      <h2 th:text="${message}"/>
+  </div>
+  ```
+  <br>
+
+  ### Test 코드 만들기
+
+  ```java
+  @RunWith(SpringRunner.class)
+  @SpringBootTest
+  @AutoConfigureMockMvc
+  public class FileControllerTest {
+  
+      @Autowired
+      private MockMvc mockMvc;
+  
+      @Test
+      public void fileUploadTest () throws Exception {
+          MockMultipartFile file = new MockMultipartFile("file", "test.txt", "text/plain", "hello file".getBytes());
+        // 인자값 : 넘겨줄때의 파일 이름, 원래 파일 이름, 파일 타입, 파일 데이터
+  
+          this.mockMvc.perform(multipart("/file").file(file))
+                  .andDo(print())
+                  .andExpect(status().is3xxRedirection());
+      }
+  }
+  ```
+
+  
+
+  
+
+  
+
