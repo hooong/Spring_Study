@@ -1318,5 +1318,121 @@ public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
 
 
 
+## @RequestBody와 HttpEntity
 
+<br>
+
+- ### @RequestBody
+
+  >@RequestBody는 요청 본문(body)에 json 또는 그 외의 형태로 데이터가 넘어올 때 그 데이터를 HttpMessageConverter를 통해 지정된 객체로 받아온다.
+
+```java
+@RestController
+@RequestMapping("/api/events")
+public class EventApi {
+
+    @PostMapping
+    public Event createEvent(@RequestBody @Valid Event event, BindingResult bindingResult) {
+        // save event to DB
+      	
+      	// @Validated 또는 @Valid로 값을 검증할 수 있으며
+      	// BindingResult를 사용해서 에러를 검출해낼 수 있다.
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println(error);
+            });
+        }
+
+        return event;
+    }
+}
+```
+
+<br>
+
+- #### HttpMessageConverter
+
+  - 만약 기본으로 등록되는 컨버터로 지원되지 않는 형식의 데이터라면 Spring MVC 설정인  WebMvcConfigurer를 통하여 설정을 할 수 있다.
+
+  ```java
+  @Configuration
+  public class WebConfig implements WebMvcConfigurer {
+  
+      @Override
+      public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+          // 기본으로 등록되는 컨버터들을 무시하고 여기서 등록하는 컨버터들이 대체가 됨.
+      }
+  
+      @Override
+      public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+          // 기본으로 등록되는 컨버터들에 추가로 등록
+      }
+  }
+  ```
+
+  - 기본 컨버터들이 명시된 곳.
+
+    `WebMvcConfigurationSupport.addDefaultHttpMessageConverters`
+
+<br>
+
+- ### HttpEntity
+
+  > - @RequestBody와 기능적으로 비슷하나 추가적으로 요청의 헤더 정보를 가져올 수 있다.
+  >
+  > - 앞에 원래  @RequestBody가 붙은 상태로 써야하나 생략이 가능하다.
+  >
+  > - @RequestBody와는 다르게 @Valid를 사용할 수 없다.
+
+```java
+@PostMapping
+public Event createEvent(HttpEntity<Event> event) {
+  // save event to DB
+
+  System.out.println(event.getHeaders());		// Headers 정보를 가져온다.
+  return event.getBody();		// body 내용을 가져온다.
+}
+```
+
+<br>
+
+- ### Test Code
+
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class EventApiTest {
+
+    @Autowired
+    ObjectMapper objectMapper;	// Event객체를 json으로 변환하기 위한 객체
+
+    @Autowired
+    MockMvc mockMvc;
+
+    @Test
+    public void createEvent() throws Exception {
+        Event event = new Event();
+        event.setName("hooong");
+        event.setLimit(20);
+
+        String json = objectMapper.writeValueAsString(event);
+
+        mockMvc.perform(post("/api/events")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content(json))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("name").value("hooong"))
+                .andExpect(jsonPath("limit").value(20));
+    }
+
+}
+```
+
+
+
+
+
+​		
 
