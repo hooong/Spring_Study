@@ -694,7 +694,6 @@ public Event getEvent(@Validated(Event.ValidateLimit.class) @ModelAttribute Even
 > form을 사용해 데이터를 submit을 하려할때 @valid를 통해 검증이 되지 않으면 BindingResult에 에러 정보가 담긴다고 했는데, 이 에러를 view를 통해 띄워주는 방법에 대해 알아보겠습니다.
 
 <center><img width="507" alt="Screen Shot 2020-01-16 at 8 05 25 PM" src="https://user-images.githubusercontent.com/37801041/72519901-a2c30e80-389b-11ea-9798-c0ccd59a3236.png"></center>
-
 ```java
 // Handler
 @PostMapping("/events")
@@ -1019,9 +1018,8 @@ public String getEvents(Model model, HttpSession httpSession) {
   - URI 확인해보기
 
     <center><img width="372" alt="Screen Shot 2020-01-20 at 11 14 11 PM" src="https://user-images.githubusercontent.com/37801041/72733195-b4c5e980-3bda-11ea-888b-f316b714a8d8.png"></center>
-
-    <br>
-
+<br>
+  
 - RedirectAttributes를 사용하여 추가하기
 
   - Spring Boot의 기본설정을 건드릴 필요가 없다.
@@ -1260,7 +1258,65 @@ public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
 
   
 
-  
+## ResponseEntity
 
+> ResponseEntity<T>는 View를 제공하지 않는 형태로 요청을 처리하고, 직접 결과 데이터 및 Http 상태 코드를 설정하여 응답을 할 수 있다. 이번 글에서는 이를 활용해서 파일 다운로드를 구현해보겠다.
+
+<br>
+
+- ResourceLoader 사용
+
+  > 우선 다운로드 할 수 있게끔하려는 파일을 코드상에서 읽어와야한다. (이때 파일은 프로젝트의 `resources` 폴더에 넣어 주었다.) 여기서는 ResourceLoader를 사용하여 리소스를 읽어와서 다운로드가 가능하게끔 만들겠다.
+
+  `Resource resource = resourceLoader.getResource("classpath:" + filename);`
+
+<br>
+
+- resource를 File로 저장하기
+
+  > 뒤에서 나올 내용이지만 해당 파일의 길이를 헤더에 지정해주기 위해서 resource를 File로 읽어 저장해준다. 
+
+  `File file = resource.getFile()`
+
+<br>
+
+- ResponseEntity 사용하기
+
+  > ResponseEntity를 사용하기 위해서는 응답 상태 코드, 응답 헤더, 응답 본문을 설정해주어야한다.
+
+  ```java
+  @GetMapping("/file/{filename}")
+      public ResponseEntity<Resource> fileDownload(@PathVariable String filename) throws IOException {
+          Resource resource = resourceLoader.getResource("classpath:" + filename);
+          File file = resource.getFile();
+  				
+        	// 파일의 mediaType를 알아내기 위한 api
+          Tika tika = new Tika();
+          String mediaType = tika.detect(file);
   
+          return ResponseEntity.ok()	// ok 200 상태코드 설정
+                  .header(HttpHeaders.CONTENT_DISPOSITION, "attachement;filename=\"" + resource.getFilename() + "\"")		// 파일이 다운로드 되어 저장될 이름
+                  .header(HttpHeaders.CONTENT_TYPE, mediaType)  // 파일의 타입
+                  .header(HttpHeaders.CONTENT_LENGTH, file.length() + "")		// 파일의 크기
+                  .body(resource);		// 응답 본문
+      }
+  ```
+
+  - ResponseEntity에서 `.`으로 이어가며 응답 상태코드, 헤더, 본문을 설정해준다.
+  - 위에서 [Tika](http://tika.apache.org/)를 사용하였는데 mediaType를 알아내기 위한  api이다.
+    - 이를 사용하려면 [Apache Tika Core](https://mvnrepository.com/artifact/org.apache.tika/tika-core)를 dependency로 추가를 해주어야한다.
+
+<br>
+
+- 서버 실행 후 파일 다운로드 요청 보내보기
+
+  <center><img width="150" alt="Screen Shot 2020-01-23 at 5 38 20 PM" src="https://user-images.githubusercontent.com/37801041/72968670-5762b000-3e07-11ea-8d3a-e8196ed3198e.png"></center>
+
+  - 위와 같이 요청을 보내면 파일이 다운로드 된다. 단, test.jpeg라는 파일이 resources폴더에 존재해야한다.
+
+  <center><img width="150" alt="Screen Shot 2020-01-23 at 5 38 26 PM" src="https://user-images.githubusercontent.com/37801041/72968674-59c50a00-3e07-11ea-9414-d861e2eba297.png"></center>
+
+
+
+
 
