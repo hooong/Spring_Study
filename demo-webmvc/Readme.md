@@ -1432,7 +1432,88 @@ public class EventApiTest {
 
 
 
+## @ResponseBody와  ResponseEntity
 
+<br>
 
-​		
+- ### @ResponseBody
 
+> @ResponseBody는 핸들러 메서드에 붙일 수 있는 애노테이션으로 HttpMessageConverter를 사용해 응답 본문(body) 메시지로 보낼 때 사용할 수 있다. 그러나 @RestController를 사용하면 그 Class안의 모든 메서드에  @ResponseBody가 자동으로 붙게된다.
+
+<br>
+
+```java
+@Controller
+@RequestMapping("/api/events")
+public class EventApi {
+
+    @PostMapping
+  	@ResponseBody
+    public Event createEvent(@RequestBody @Valid Event event, 
+                                             BindingResult bindingResult) {
+        // save event to DB
+        if (bindingResult.hasErrors()){
+						bindingResult.getAllErrors().forEach(error -> {
+                System.out.println(error);
+            });
+        }
+				
+        return event;
+    }
+}
+```
+
+```java
+// 위의 코드와 똑같은 동작을 하는 코드이다.
+
+@RestController		// 자동으로 @ResponseBody가 붙는다
+@RequestMapping("/api/events")
+public class EventApi {
+
+    @PostMapping
+    public Event createEvent(@RequestBody @Valid Event event, 
+                                             BindingResult bindingResult) {
+        // save event to DB
+        if (bindingResult.hasErrors()){
+						bindingResult.getAllErrors().forEach(error -> {
+                System.out.println(error);
+            });
+        }
+				
+        return event;
+    }
+}
+```
+
+​		<br>
+
+- ### ResponseEntity
+
+> 응답을 보낼 때 헤더 및 상태 코드를 직접적으로 다룰 때 사용할 수 있다.
+
+```java
+@RestController
+@RequestMapping("/api/events")
+public class EventApi {
+
+    @PostMapping
+    public ResponseEntity<Event> createEvent(@RequestBody @Valid Event event, BindingResult bindingResult) {
+        // save event to DB
+        if (bindingResult.hasErrors()){
+          	// error가 있다면 BadRequest를 보낸다.
+            return ResponseEntity.badRequest().build();
+        }
+
+				return ResponseEntity.ok(event);  // 상태코드 200으로 event를 응답본문에 담아 보낸다.
+      
+				// 아래 코드는 상태코드를 CREATED(201)로 설정하여 보낸다.      
+        // return new ResponseEntity<Event>(event,HttpStatus.CREATED);
+    }
+}
+```
+
+<br>
+
+- ### 참고
+
+  > https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-responsebody
