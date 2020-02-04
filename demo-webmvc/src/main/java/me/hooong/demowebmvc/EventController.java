@@ -24,6 +24,16 @@ import java.util.Map;
 @SessionAttributes("event")
 public class EventController {
 
+//    @ModelAttribute
+//    public void categories(Model model) {
+//        model.addAttribute("categories",List.of("study", "seminar", "hobby", "social"));
+//    }
+
+    @ModelAttribute("categories")
+    public List<String> categories(Model model) {
+        return List.of("study", "seminar", "hobby", "social");
+    }
+
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {
         model.addAttribute("event",new Event());
@@ -59,14 +69,9 @@ public class EventController {
     }
 
     @GetMapping("/events/list")
-    public String getEvents(@ModelAttribute("newEvent") Event event,
-                            Model model,
+    public String getEvents(Model model,
                             @SessionAttribute LocalDateTime visitTime) {
         System.out.println(visitTime);
-
-//        Event newEvent = new Event();
-//        newEvent.setName(name);
-//        newEvent.setLimit(limit);
 
         Event spring = new Event();
         spring.setName("hooong");
