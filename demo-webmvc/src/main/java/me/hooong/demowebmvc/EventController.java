@@ -42,7 +42,7 @@ public class EventController {
     }
 
     @ExceptionHandler
-    public String eventErrorHandler(RuntimeException exception, Model model) {
+    public String runtimeErrorHandler(RuntimeException exception, Model model) {
         model.addAttribute("message","runtime error");
         return "error";
     }

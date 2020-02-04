@@ -1704,3 +1704,95 @@ public List<String> categories(Model model) {
 
     <center><img width="427" alt="Screen Shot 2020-02-04 at 10 12 22 PM" src="https://user-images.githubusercontent.com/37801041/73752725-cd223080-47a4-11ea-9c43-f7c50dfa0dac.png"></center
 
+<br>
+
+## @ExceptionHandler
+
+> 특정 예외가 발생할 경우 발생한 요청을 처리해주는 핸들러
+
+<br>
+
+- ### `EventException`이라는 클래스를 만든다. (RuntimeException 상속)
+
+  ```java
+  public class EventException extends RuntimeException {
+  }
+  ```
+
+<br>
+
+- ### @ExceptionHandler 정의
+
+  ```java
+  @ExceptionHandler
+  public String eventErrorHandler(EventException exception, Model model) {
+    model.addAttribute("message","event error");
+    return "error";
+  }
+  
+  @ExceptionHandler
+  public String runtimeErrorHandler(RuntimeException exception, Model model) {
+    model.addAttribute("message","runtime error");
+    return "error";
+  }
+  
+  ...
+    
+  @GetMapping("/events/form/name")
+    public String eventsFormName(Model model) {
+    throw new EventException(); 	// 위에 두개가 있을 경우 타입이 구체적으로 맞는 핸들러를 실행
+  }
+  ```
+
+  ```java
+  // 두개를 모두 처리하고 싶을경우는 아래처럼
+  // argument에서는 상위 클래스 타입으로 와야한다. (RuntimeException)
+  @ExceptionHandler({EventException.class, RuntimeException.class})
+  public String eventErrorHandler(RuntimeException exception, Model model) {
+    model.addAttribute("message","event error");
+    return "error";
+  }
+  ```
+
+  <br>
+
+- ### `error.html` 생성
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+      <meta charset="UTF-8">
+      <title>Error</title>
+  </head>
+  <body>
+  <div th:if="${message}">
+      <h2 th:text="${message}"></h2>
+  </div>
+  
+  </body>
+  </html>
+  ```
+
+  <br>
+
+- ### 예외 발생 처리
+
+  <center><img width="141" alt="Screen Shot 2020-02-04 at 11 29 23 PM" src="https://user-images.githubusercontent.com/37801041/73754481-d06aeb80-47a7-11ea-81f9-25820889d38d.png"></center>
+
+  <br>
+
+- ### Rest api에서 사용할 때
+
+  - `ResponseEntity`를 리턴타입으로 사용할 수 있다.
+
+  ```java
+  @ExceptionHandler
+  public ResponseEntity errorHandler() {
+    return ResponseEntity.badRequest().body("can't create event as ...");
+  }
+  ```
+
+  <br>
+
+  참고 : [https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-exceptionhandler](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-exceptionhandler)
