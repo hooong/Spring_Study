@@ -29,11 +29,28 @@ public class EventController {
 //    @Autowired
 //    EventValidator eventValidator;
 
+//    @ExceptionHandler({EventException.class, RuntimeException.class})
+//    public String eventErrorHandler(RuntimeException exception, Model model) {
+//        model.addAttribute("message","event error");
+//        return "error";
+//    }
+
+    @ExceptionHandler
+    public String eventErrorHandler(EventException exception, Model model) {
+        model.addAttribute("message","event error");
+        return "error";
+    }
+
+    @ExceptionHandler
+    public String eventErrorHandler(RuntimeException exception, Model model) {
+        model.addAttribute("message","runtime error");
+        return "error";
+    }
+
     @InitBinder("event")
     public void initEventBinder(WebDataBinder webDataBinder) {
         webDataBinder.setDisallowedFields("id");
 //        webDataBinder.setAllowedFields();
-        webDataBinder.addCustomFormatter();
         webDataBinder.addValidators(new EventValidator());
     }
 
@@ -49,8 +66,10 @@ public class EventController {
 
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {
-        model.addAttribute("event",new Event());
-        return "/events/form-name";
+        throw new EventException();
+
+//        model.addAttribute("event",new Event());
+//        return "/events/form-name";
     }
 
     @PostMapping("/events/form/name")

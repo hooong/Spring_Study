@@ -13,6 +13,11 @@ import javax.validation.Valid;
 @RequestMapping("/api/events")
 public class EventApi {
 
+    @ExceptionHandler
+    public ResponseEntity errorHandler() {
+        return ResponseEntity.badRequest().body("can't create event as ...");
+    }
+
     @PostMapping
     public ResponseEntity<Event> createEvent(@RequestBody @Valid Event event, BindingResult bindingResult) {
         // save event to DB
