@@ -35,11 +35,7 @@ public class EventController {
 //        return "error";
 //    }
 
-    @ExceptionHandler
-    public String eventErrorHandler(EventException exception, Model model) {
-        model.addAttribute("message","event error");
-        return "error";
-    }
+
 
     @ExceptionHandler
     public String runtimeErrorHandler(RuntimeException exception, Model model) {
@@ -47,22 +43,14 @@ public class EventController {
         return "error";
     }
 
-    @InitBinder("event")
-    public void initEventBinder(WebDataBinder webDataBinder) {
-        webDataBinder.setDisallowedFields("id");
-//        webDataBinder.setAllowedFields();
-        webDataBinder.addValidators(new EventValidator());
-    }
+
 
 //    @ModelAttribute
 //    public void categories(Model model) {
 //        model.addAttribute("categories",List.of("study", "seminar", "hobby", "social"));
 //    }
 
-    @ModelAttribute("categories")
-    public List<String> categories(Model model) {
-        return List.of("study", "seminar", "hobby", "social");
-    }
+
 
     @GetMapping("/events/form/name")
     public String eventsFormName(Model model) {

@@ -1796,3 +1796,45 @@ public List<String> categories(Model model) {
   <br>
 
   참고 : [https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-exceptionhandler](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-exceptionhandler)
+
+<br>
+
+## @ControllerAdvice
+
+> 모든 또는 여러개의 컨트롤러에 같은 @ExceptionHandler, @InitBinder, @ModelAttributes를 적용하고 싶은 경우 사용할 수 있다.
+
+<br>
+
+- ### `BaseController`를 생성
+
+```java
+@ControllerAdvice(assignableTypes = {EventController.class, EventApi.class})
+public class BaseController {
+    @ExceptionHandler
+    public String eventErrorHandler(EventException exception, Model model) {
+        model.addAttribute("message","event error");
+        return "error";
+    }
+
+    @InitBinder("event")
+    public void initEventBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setDisallowedFields("id");
+    }
+
+    @ModelAttribute("categories")
+    public List<String> categories(Model model) {
+        return List.of("study", "seminar", "hobby", "social");
+    }
+}
+```
+
+- `assignableTypes`가 없으면 모든 컨트롤러에 적용.
+- `assignalbeTypes`를 사용하여 범위를 지정할 수 있음.
+  - 특정 애노테이션을 가지고 있는 컨트롤러
+  - 특정 패키지 이하의 컨트롤러
+  - 특정 클래스 타입
+
+<br>
+
+참고 : [https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-controller-advice](https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-controller-advice)
+
