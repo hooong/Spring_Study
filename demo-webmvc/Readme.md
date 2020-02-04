@@ -1557,5 +1557,149 @@ public List<String> categories(Model model) {
 
   - 위와 같이 PetController안에 "owner"라는 @ModelAttribute가 있어서 컨트롤러 안의 모든 핸들러에서 해당 owner의 모델 정보를 사용할 수 있게된다.
 
+<br>
 
+## @InitBinder
 
+> 특정 컨트롤러에서 바인딩 또는 검증 설정을 변경하고 싶을 때 @InitBinder를 이용해 설정값을 지정할 수 있다.
+
+<br>
+
+- ### 사용법
+
+  ```java
+  @InitBinder
+  public void initEventBinder(WebDataBinder webDataBinder) {
+    ... (설정)
+  }
+  
+  // 특정 모델 객체에만 적용을 하고 싶을 경우 아래와 같이 이름을 지정.
+  @InitBinder("event")
+  public void initEventBinder(WebDataBinder webDataBinder) {
+    ... (설정)
+  }
+  ```
+
+  <br>
+
+- ### 바인딩 설정
+
+  ```java
+  @InitBinder
+  public void initEventBinder(WebDataBinder webDataBinder) {
+    	webDataBinder.setDisallowedFields("id");
+    	// 또는
+    	// webDataBinder.setAllowedFields();
+  }
+  ```
+
+  - `setDisallowedFields()` : 지정한 값을 제외하고 바인딩을 한다.
+  - `setAlloewdFields()` : 지정한 값들만 바인딩 한다.
+
+  <br>
+
+  ### 예)  `id`값을 바인딩 하고 안하기
+
+  - 아무 설정을 하지 않고 id값을 받을 경우
+
+    <img width="217" alt="Screen Shot 2020-02-04 at 10 03 04 PM" src="https://user-images.githubusercontent.com/37801041/73751775-1a9d9e00-47a3-11ea-9d40-033c505ba3f6.png">
+
+    id값이 정상적으로 넘어오는 것을 확인할 수 있다.
+
+  - `webDataBinder.setDisallowedFields("id");` 설정을 해줄 경우
+
+    <img width="173" alt="Screen Shot 2020-02-04 at 10 03 41 PM" src="https://user-images.githubusercontent.com/37801041/73751784-1e312500-47a3-11ea-95ad-4c35b6f4ca36.png">
+
+    Id값에  `null`값으로 바인딩이 되지 않는 것을 확인할 수 있다.
+
+<br>
+
+- ### Formatter 설정
+
+  ```java
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  private LocalDate startDate;
+  ```
+
+  - 위의 코드와 같이 포매터를 `Event`라는 클래스에서 startDate라는 포맷을 지정해줄 수도 있고
+  - `webDataBinder.addCustomFormatter();`를 사용하여 설정해줄 수도 있다.
+
+<br>
+
+- ### Validator 설정
+
+  - 첫번째 방법
+
+    - `EventValidator`라는 클래스를 다음과 같이 만들어준다.
+
+    ```java
+    public class EventValidator implements Validator {
+        @Override
+        public boolean supports(Class<?> aClass) {
+            return Event.class.isAssignableFrom(aClass);
+        }
+    
+        @Override
+        public void validate(Object o, Errors errors) {
+            Event event = (Event)o;
+          	// name값이 "aaa"이면 에러를 발생
+            if (event.getName().equalsIgnoreCase("aaa")) {
+                errors.rejectValue("name", "wrongValue","the value is not allowed");
+            }
+        }
+    }
+    ```
+
+    - 컨트롤러의 @InitBinder에 `addValidators()`를 사용하여 validator를 추가해준다.
+
+    ```java
+    @InitBinder("event")
+    public void initEventBinder(WebDataBinder webDataBinder) {
+      webDataBinder.addValidators(new EventValidator());
+    }
+    ```
+
+    <br>
+
+  - 두번째 방법
+
+    - `EventValidator`라는 클래스 @Component를 사용하여 빈으로 등록해준다.
+
+    ```java
+    @Component
+    public class EventValidator {
+    
+        public void validate(Event event, Errors errors) {
+            if (event.getName().equalsIgnoreCase("aaa")) {
+                errors.rejectValue("name", "wrongValue","the value is not allowed");
+            }
+        }
+    }
+    ```
+
+    - 컨트롤러에서 의존성 주입을 받고  특정시점에서 validator를 사용한다.
+
+    ```java
+    @Autowired
+    EventValidator eventValidator;
+    
+     ...
+       
+    @PostMapping("/events/form/name")
+    public String eventsFormNameSubmit(@Validated @ModelAttribute Event event,
+                                          BindingResult bindingResult) {
+       if(bindingResult.hasErrors()) {
+         return "/events/form-name";
+       }
+       // validator 실행
+       eventValidator.validate(event, bindingResult);
+    
+       return "redirect:/events/form/limit";
+    }
+    ```
+
+  <br>
+
+  - ### 실행의 예
+
+    <center><img width="427" alt="Screen Shot 2020-02-04 at 10 12 22 PM" src="https://user-images.githubusercontent.com/37801041/73752725-cd223080-47a4-11ea-9c43-f7c50dfa0dac.png"></center

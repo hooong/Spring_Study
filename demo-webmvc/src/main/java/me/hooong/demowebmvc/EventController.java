@@ -32,6 +32,8 @@ public class EventController {
     @InitBinder("event")
     public void initEventBinder(WebDataBinder webDataBinder) {
         webDataBinder.setDisallowedFields("id");
+//        webDataBinder.setAllowedFields();
+        webDataBinder.addCustomFormatter();
         webDataBinder.addValidators(new EventValidator());
     }
 
