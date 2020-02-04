@@ -1311,10 +1311,9 @@ public String eventsFormLimitSubmit(@Validated @ModelAttribute Event event,
 - 서버 실행 후 파일 다운로드 요청 보내보기
 
   <center><img width="150" alt="Screen Shot 2020-01-23 at 5 38 20 PM" src="https://user-images.githubusercontent.com/37801041/72968670-5762b000-3e07-11ea-8d3a-e8196ed3198e.png"></center>
-
-  - 위와 같이 요청을 보내면 파일이 다운로드 된다. 단, test.jpeg라는 파일이 resources폴더에 존재해야한다.
-
-  <center><img width="150" alt="Screen Shot 2020-01-23 at 5 38 26 PM" src="https://user-images.githubusercontent.com/37801041/72968674-59c50a00-3e07-11ea-9414-d861e2eba297.png"></center>
+- 위와 같이 요청을 보내면 파일이 다운로드 된다. 단, test.jpeg라는 파일이 resources폴더에 존재해야한다.
+  
+<center><img width="150" alt="Screen Shot 2020-01-23 at 5 38 26 PM" src="https://user-images.githubusercontent.com/37801041/72968674-59c50a00-3e07-11ea-9414-d861e2eba297.png"></center>
 
 
 
@@ -1517,3 +1516,46 @@ public class EventApi {
 - ### 참고
 
   > https://docs.spring.io/spring/docs/current/spring-framework-reference/web.html#mvc-ann-responsebody
+
+<br>
+
+## @ModelAttribute의 또 다른 사용법
+
+```java
+@ModelAttribute
+public void categories(Model model) {
+    model.addAttribute("categories",List.of("study", "seminar", "hobby", "social"));
+}
+
+// 또는
+@ModelAttribute("categories")
+public List<String> categories(Model model) {
+  return List.of("study", "seminar", "hobby", "social");
+}
+```
+
+- 위와 같이  `@ModelAttribute`를 사용하게되면 이 메서드를 가지는 컨트롤러 안의 모든 메서드에 model정보를 넘겨주게 된다.
+
+- Petclinic의 예로보면 아래와 같다.
+
+  ```java
+  @Controller
+  @RequestMapping("/owners/{ownerId}")
+  class PetController {
+    	
+    	...
+      
+      @ModelAttribute("owner")
+      public Owner findOwner(@PathVariable("ownerId") int ownerId) {
+          return this.owners.findById(ownerId);
+      }
+    
+    	...
+        
+  }
+  ```
+
+  - 위와 같이 PetController안에 "owner"라는 @ModelAttribute가 있어서 컨트롤러 안의 모든 핸들러에서 해당 owner의 모델 정보를 사용할 수 있게된다.
+
+
+
