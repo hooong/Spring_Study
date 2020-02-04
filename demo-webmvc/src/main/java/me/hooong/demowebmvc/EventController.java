@@ -1,11 +1,13 @@
 package me.hooong.demowebmvc;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,6 +25,15 @@ import java.util.Map;
 @Controller
 @SessionAttributes("event")
 public class EventController {
+
+//    @Autowired
+//    EventValidator eventValidator;
+
+    @InitBinder("event")
+    public void initEventBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setDisallowedFields("id");
+        webDataBinder.addValidators(new EventValidator());
+    }
 
 //    @ModelAttribute
 //    public void categories(Model model) {
@@ -46,6 +57,8 @@ public class EventController {
         if(bindingResult.hasErrors()) {
             return "/events/form-name";
         }
+//        eventValidator.validate(event, bindingResult);
+
         return "redirect:/events/form/limit";
     }
 
